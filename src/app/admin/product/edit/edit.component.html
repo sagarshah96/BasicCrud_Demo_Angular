@@ -1,0 +1,116 @@
+<div class="jumbotron">
+  <form [formGroup]="productForm">
+    <h2 class="mt-2">Edit Product</h2>
+    <div class="form-group">
+      <label>Name<span class="text-danger">*</span></label>
+      <input
+        type="text"
+        formControlName="productName"
+        [ngClass]="{
+          'form-control': true,
+          'is-invalid':
+            !f.productName?.valid && (f.productName?.touched || submitted),
+          'is-valid': f.productName?.valid && f.productName?.touched
+        }"
+      />
+      <span
+        *ngIf="
+          f.productName?.errors?.required &&
+          (f.productName?.touched || submitted)
+        "
+        id="productName"
+        class="text-danger"
+        >Product Name is required</span
+      >
+    </div>
+    <div class="form-group">
+      <label>Description<span class="text-danger">*</span></label>
+      <textarea
+        row="3"
+        formControlName="productDesc"
+        [ngClass]="{
+          'form-control': true,
+          'is-invalid':
+            !f.productDesc?.valid && (f.productDesc?.touched || submitted),
+          'is-valid': f.productDesc?.valid && f.productDesc?.touched
+        }"
+      ></textarea>
+      <span
+        *ngIf="
+          f.productDesc?.errors?.required &&
+          (f.productDesc?.touched || submitted)
+        "
+        id="fnHelp"
+        class="text-danger"
+        >Product description is required</span
+      >
+    </div>
+    <div class="form-group">
+      <label>HSN Code<span class="text-danger"></span></label>
+      <input type="text" formControlName="hsnCode" class="form-control" />
+      <small class=""></small>
+    </div>
+    <div class="form-group">
+      <label>Expiry Date<span class="text-danger"></span></label>
+
+      <input type="date" formControlName="expDate" class="form-control" />
+      <small class=""></small>
+    </div>
+    <div class="form-group">
+      <label>Price<span class="text-danger"></span></label>
+      <input type="number" formControlName="price" class="form-control" />
+      <small class=""></small>
+    </div>
+    <div class="form-group" formArrayName="productLinks">
+      <table width="100%">
+        <tr>
+          <td>Links<span class="text-danger">*</span></td>
+          <td>
+            <button
+              class="btn btn-sm btn-secondary mt-2 mb-2"
+              style="float: right"
+              (click)="addLinks()"
+            >
+              Add Links
+            </button>
+          </td>
+        </tr>
+        <tr *ngFor="let item of pl.controls; let i = index" [formGroupName]="i">
+          <td>
+            <input
+              type="text"
+              formControlName="links"
+              [ngClass]="{
+                'form-control': true,
+                'is-invalid':
+                  !pl.controls[i].get('links')?.valid &&
+                  (pl.controls[i].get('links')?.touched || submitted),
+                'is-valid':
+                  pl.controls[i].get('links')?.valid &&
+                  pl.controls[i].get('links')?.touched
+              }"
+            />
+            <span
+              *ngIf="
+                pl.controls[i].get('links')?.errors?.required &&
+                (pl.controls[i].get('links')?.touched || submitted)
+              "
+              class="text-danger"
+              >Link is required</span
+            >
+          </td>
+          <td *ngIf="this.pl.length > 1">
+            <button class="btn btn btn-danger" (click)="removeLinks(i)">
+              Remove
+            </button>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <br />
+    <button type="submit" (click)="Update()" class="btn btn-primary">
+      Update</button
+    >&nbsp;&nbsp;&nbsp;&nbsp;
+    <button type="button" routerLink="" class="btn btn-secondary">Back</button>
+  </form>
+</div>

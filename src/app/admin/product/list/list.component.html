@@ -1,0 +1,82 @@
+<br />
+<br />
+<p-toast></p-toast>
+
+<p-confirmPopup></p-confirmPopup>
+
+<div class="">
+  <div class="row">
+    <div class="col-md-6">
+      <h3>Products</h3>
+    </div>
+    <div class="col-md-6">
+      <input
+        type="button"
+        routerLink="/add"
+        class="btn btn-success"
+        value="Add"
+        style="float: right"
+      />
+    </div>
+  </div>
+
+  <div class="card">
+    <p-table
+      [value]="prod"
+      [paginator]="true"
+      [rows]="10"
+      [showCurrentPageReport]="true"
+      responsiveLayout="scroll"
+      currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+      [rowsPerPageOptions]="[10, 25, 50]"
+      sortMode="multiple"
+    >
+      <ng-template pTemplate="header">
+        <tr>
+          <th pSortableColumn="productName">
+            Name <p-sortIcon field="productName"></p-sortIcon>
+          </th>
+          <th pSortableColumn="productDesc">
+            Description <p-sortIcon field="productDesc"></p-sortIcon>
+          </th>
+          <th pSortableColumn="hsnCode">
+            HSN Code <p-sortIcon field="hsnCode"></p-sortIcon>
+          </th>
+          <th pSortableColumn="expDate">
+            Expiry Date <p-sortIcon field="expDate"></p-sortIcon>
+          </th>
+          <th pSortableColumn="price">
+            Price <p-sortIcon field="price"></p-sortIcon>
+          </th>
+          <th>Edit</th>
+          <th>Delete</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-prod>
+        <tr>
+          <td>{{ prod.productName }}</td>
+          <td>{{ prod.productDesc }}</td>
+          <td>{{ prod.hsnCode }}</td>
+          <td>{{ prod.expDate }}</td>
+          <td>{{ prod.price }}</td>
+          <td>
+            <button
+              class="btn btn-success"
+              routerLink="/edit/{{ prod.productID }}"
+            >
+              Edit
+            </button>
+          </td>
+          <td>
+            <button
+              class="btn btn-danger"
+              (click)="confirm($event, prod.productID)"
+            >
+              Delete
+            </button>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</div>
